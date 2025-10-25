@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suit Jawa</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background-image: radial-gradient(at top left, #00bfff 0%, black 50%);
+            height: 100vh;
+            color: white;
+            display: flex;
+            flex-direction: column;
+        }
+        h1{
+            text-align: center;
+            font-family: cursive;
+            font-size: 40px;
+        }
+        section#game{
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 50px;
+        }
+        .comp{
+            width: 150px;
+            height: 150px;
+            background-color: white;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .hasil{
+            /* width: 400px; */
+            height: 50px;
+            padding: 5px 20px;
+            color: rgba(205, 205, 205, 0.405);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: rgba(255, 255, 255, 0.215);
+            border-radius: 50px;
+            border: 2px solid white;
+        }
+        .user{
+            width: 800px;
+            height: 200px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .user img, .comp img{
+            background-color: rgb(255, 255, 255);
+            margin: 0 20px;
+            width: 150px;
+            border-radius: 10px;
+        }
+        .user img{
+           cursor: pointer; 
+        }
+        .gajah, .orang, .semut{
+            position: relative;
+            top: 0px;
+            transition: .2s;
+        }
+
+        .gajah:active, .orang:active, .semut:active{
+            top: 4px;
+            box-shadow: 0px 0px 2px 10px #00bfff4e;
+        }
+    </style>
+</head>
+<body>
+    <section id="game">
+        <h1>Suit Jawa</h1>
+        <div class="comp">
+            <img src="img/bot.png" alt="" class="imgComp">
+        </div>
+        <div class="hasil">HASIL</div>
+        <div class="user">
+            <img src="img/gajah.png" alt="" class="gajah">
+            <img src="img/orang.png" alt="" class="orang">
+            <img src="img/semut.png" alt="" class="semut">
+        </div>
+    </section>
+
+
+    <script>
+        
+
+        function getPilihanComputer(){
+            var comp = Math.random()
+
+            if(comp <= 0.34){
+                return "semut"
+            }else if(comp > 0.34 && comp <= 0.66){
+                return "orang"
+            }else{
+                return "gajah"
+            }
+        }
+
+        function rules(comp, user){
+            // karena di dalam function bisa pake if yang lebih singkat
+            if(comp === user) return "SERI";
+            if(user === "semut") return (comp === "gajah") ? "KAMU MENANG" : "KAMU KALAH"; // logic-Nya jika user piluh orang return computer milih semut, maka menang
+
+            if(user === "orang") return (comp === "semut") ? "KAMU MENANG" : "KAMU KALAH";
+            if(user === "gajah") return (comp === "orang") ? "KAMU MENANG" : "KAMU KALAH";
+            }
+        
+        var tampilkanHasil = document.querySelector(".hasil")
+        var imgComp = document.querySelector(".imgComp")
+        var pilihGajah = document.querySelector(".gajah")
+        var pilihOrang = document.querySelector(".orang")
+        var pilihSemut = document.querySelector(".semut")
+
+        pilihGajah.addEventListener("click", function(){
+
+            tampilkanHasil.innerHTML = "loading..";
+
+            var pilihanComputer = getPilihanComputer();
+            var pilihanUser = pilihGajah.className;
+            var hasil = rules(pilihanComputer, pilihanUser);
+
+            imgComp.setAttribute("src", "img/" + pilihanComputer + ".png");
+
+            setTimeout(function(){
+                tampilkanHasil.innerHTML = "kamu memilih " + "<span style=\"color:\#00bfff;margin:0 5px;\" >" + pilihanUser + "</span>" + " dan computer memilih " + "<span style=\"color:\#00bfff;margin:0 5px;\" >" + pilihanComputer + "</span>" + " maka hasilnya \"" + hasil + "\"";
+            }, 1000);
+        })
+
+        pilihOrang.addEventListener("click", function(){
+            tampilkanHasil.innerHTML = "loading..";
+
+            var pilihanComputer = getPilihanComputer();
+            var pilihanUser = pilihOrang.className;
+            var hasil = rules(pilihanComputer, pilihanUser);
+
+            imgComp.setAttribute("src", "img/" + pilihanComputer + ".png");
+
+            setTimeout(function(){
+                tampilkanHasil.innerHTML = "kamu memilih " + "<span style=\"color:\#00bfff;margin:0 5px;\" >" + pilihanUser + "</span>" + " dan computer memilih " + "<span style=\"color:\#00bfff;margin:0 5px;\" >" + pilihanComputer + "</span>" + " maka hasilnya \"" + hasil + "\"";
+            }, 1000);
+        })
+
+        pilihSemut.addEventListener("click", function(){
+
+            tampilkanHasil.innerHTML = "loading..";
+
+            var pilihanComputer = getPilihanComputer();
+            var pilihanUser = pilihSemut.className;
+            var hasil = rules(pilihanComputer, pilihanUser);
+
+            imgComp.setAttribute("src", "img/" + pilihanComputer + ".png");
+          
+            setTimeout(function(){
+                tampilkanHasil.innerHTML = "kamu memilih " + "<span style=\"color:\#00bfff;margin:0 5px;\" >" + pilihanUser + "</span>" + " dan computer memilih " + "<span style=\"color:\#00bfff;margin:0 5px;\" >" + pilihanComputer + "</span>" + " maka hasilnya \"" + hasil + "\"";
+            }, 1000);
+        })
+
+
+
+        const user = {
+            nama : "Jihad Al Qudsi",
+            status : "Mahasiswa",
+            skill : "HTML, CSS, Javascript, PHP, MySQL, Java",
+            motto : "My Code is My Art"
+        }
+    </script>
+</body>
+</html>
